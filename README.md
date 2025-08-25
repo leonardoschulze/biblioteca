@@ -1,35 +1,33 @@
-# Biblioteca - Banco de Dados
+Biblioteca - Banco de Dados
 
 Este projeto cria o banco de dados `biblioteca` com tabelas e triggers para gerenciar autores, livros, leitores e empréstimos.
 
----
 
-## Como rodar no XAMPP
+Como rodar no XAMPP
 
-### 1. Instalar e iniciar o XAMPP
+1. Instalar e iniciar o XAMPP
 
 - Faça o download e instale o [XAMPP](https://www.apachefriends.org/pt_br/index.html) para seu sistema operacional.
 - Abra o painel do XAMPP.
 - Inicie os módulos **Apache** e **MySQL** clicando em "Start".
 
-### 2. Acessar o phpMyAdmin
+2. Acessar o phpMyAdmin
 
 - No navegador, acesse: [http://localhost/phpmyadmin](http://localhost/phpmyadmin)
 - Aqui você pode criar bancos de dados e executar scripts SQL.
 
----
 
-## Como criar o banco e as tabelas
 
-### 1. Criar banco de dados e tabelas
+Como criar o banco e as tabelas
+
+1. Criar banco de dados e tabelas
 
 - No phpMyAdmin, clique em **SQL** no menu superior.
 - Copie e cole o script SQL fornecido (arquivo `.sql` com a criação das tabelas e triggers).
 - Clique em **Executar**.
 
----
 
-## Como configurar a conexão com o banco em PHP
+Como configurar a conexão com o banco em PHP
 
 Crie um arquivo PHP para conectar ao banco com o seguinte código (exemplo):
 
@@ -48,3 +46,5 @@ if ($conn->connect_error) {
     echo "Conectado com sucesso!";
 }
 ?>
+
+## Tô cansado, pra mim deu
