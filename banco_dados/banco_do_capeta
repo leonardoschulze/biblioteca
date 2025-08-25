@@ -1,0 +1,75 @@
+CREATE DATABASE biblioteca_leo;
+USE biblioteca_leo;
+
+CREATE TABLE autores (
+  id_autor INT AUTO_INCREMENT PRIMARY KEY,
+  nome VARCHAR(100) NOT NULL,
+  nacionalidade VARCHAR(50),
+  ano_nascimento YEAR
+);
+
+CREATE TABLE livros (
+  id_livro INT AUTO_INCREMENT PRIMARY KEY,
+  titulo VARCHAR(150) NOT NULL,
+  genero VARCHAR(50),
+  ano_publicacao YEAR,
+  id_autor INT,
+  FOREIGN KEY (id_autor) REFERENCES autores(id_autor) ON DELETE CASCADE
+);
+
+CREATE TABLE leitores (
+  id_leitor INT AUTO_INCREMENT PRIMARY KEY,
+  nome VARCHAR(100) NOT NULL,
+  email VARCHAR(100),
+  telefone VARCHAR(20)
+);
+
+CREATE TABLE emprestimos (
+  id_emprestimo INT AUTO_INCREMENT PRIMARY KEY,
+  id_livro INT,
+  id_leitor INT,
+  data_emprestimo DATE NOT NULL,
+  data_devolucao DATE,
+  FOREIGN KEY (id_livro) REFERENCES livros(id_livro),
+  FOREIGN KEY (id_leitor) REFERENCES leitores(id_leitor)
+);
+
+DELIMITER $$
+
+CREATE TRIGGER livros_ano_publicacao_check_before_insert
+BEFORE INSERT ON livros
+FOR EACH ROW
+BEGIN
+  IF NEW.ano_publicacao <= 1500 OR NEW.ano_publicacao > YEAR(CURDATE()) THEN
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Ano de publicação inválido.';
+  END IF;
+END$$
+
+CREATE TRIGGER livros_ano_publicacao_check_before_update
+BEFORE UPDATE ON livros
+FOR EACH ROW
+BEGIN
+  IF NEW.ano_publicacao <= 1500 OR NEW.ano_publicacao > YEAR(CURDATE()) THEN
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Ano de publicação inválido.';
+  END IF;
+END$$
+
+CREATE TRIGGER emprestimos_data_devolucao_check_before_insert
+BEFORE INSERT ON emprestimos
+FOR EACH ROW
+BEGIN
+  IF NEW.data_devolucao IS NOT NULL AND NEW.data_devolucao < NEW.data_emprestimo THEN
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Data de devolução não pode ser anterior à data de empréstimo.';
+  END IF;
+END$$
+
+CREATE TRIGGER emprestimos_data_devolucao_check_before_update
+BEFORE UPDATE ON emprestimos
+FOR EACH ROW
+BEGIN
+  IF NEW.data_devolucao IS NOT NULL AND NEW.data_devolucao < NEW.data_emprestimo THEN
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Data de devolução não pode ser anterior à data de empréstimo.';
+  END IF;
+END$$
+
+DELIMITER ;
