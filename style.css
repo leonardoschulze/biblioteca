@@ -1,0 +1,28 @@
+  body {
+      font-family: Arial, sans-serif;
+      max-width: 400px;
+      margin: 280px auto; 
+      background-color: aqua;
+  }
+
+  .card {
+      border: 5px solid #000000;
+      padding: 40px;
+      border-radius: 6px;
+      background-color: bisque;
+  }
+
+  input {
+      width: 100%;
+      padding: 8px;
+      margin: 6px 0
+  }
+
+  button {
+      padding: 8px 12px
+      color: black;
+  }
+
+  .msg {
+      color: red
+  }
